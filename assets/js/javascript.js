@@ -39,15 +39,48 @@ function citySearch() {
         
         
         
-                    detailsDiv.innerHTML = "<h2> Temp: " + temp + "</h2>" +
+                    detailsDiv.innerHTML = "<h2> Temp: " + temp + "&#176F</h2>" +
                     "<br />" + 
-                    "<h2> Wind Speed: " + wind + "</h2>" + 
+                    "<h2> Wind Speed: " + wind + " MPH</h2>" + 
                     "<br />" +
-                    "<h2> Humidity: " + humidity + "</h2>" +
+                    "<h2> Humidity: " + humidity + "%</h2>" +
                     "<br />" +
                     "<h2> UV Index: " + uvi + "</h2>";
                     
                     weatherDetails.appendChild(detailsDiv);
+
+                    fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + citySearchValue + "&units=imperial&appid=2f0eea858680841d20a1b82aaa9fa729")
+                        .then(function(response) {
+                            return response.json();
+                        })
+                        .then(function(response) {
+
+                            let fiveDayContainer = document.querySelector("#fiveDayContainer");
+
+                            let futureDetails = document.createElement("div");
+                            futureDetails.id = 'futureDetails';
+                            futureDetails.className = 'futureDetails';
+
+                            fiveDayContainer.appendChild(futureDetails);
+
+                            for(let i = 0; i <= 5; i++) {
+                                let dailyDate = response.list[i].dt;
+                                let dailyTemp = response.list[i].main.temp;
+                                let dailyWind = response.list[i].wind.speed;
+                                let dailyHum = response.list[i].main.humidity;
+
+                                let dailyDetails = document.createElement("div");
+
+                                dailyDetails.innerHTML = "<p> Date: " + dailyDate + "</p>" +
+                                "<p> Temp: " + dailyTemp + "&#176F</p>" +
+                                "<p> Wind: " + dailyWind + " MPH</p>" +
+                                "<p> Humidity: " + dailyHum + "%</p>"
+
+                                futureDetails.appendChild(dailyDetails);
+                            }
+        
+                        })
+
 
                 })
 
