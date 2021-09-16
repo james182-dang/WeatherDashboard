@@ -59,23 +59,43 @@ function citySearch() {
 
                             let futureDetails = document.createElement("div");
                             futureDetails.id = 'futureDetails';
-                            futureDetails.className = 'futureDetails';
+                            futureDetails.className = 'container';
 
                             fiveDayContainer.appendChild(futureDetails);
 
-                            for(let i = 0; i <= 5; i++) {
+                            let dailyDetails = document.createElement("div");
+                            dailyDetails.className = "row"
+
+                            for(let i = 0; i <= 4; i++) {
                                 let dailyDate = response.list[i].dt;
                                 let dailyTemp = response.list[i].main.temp;
                                 let dailyWind = response.list[i].wind.speed;
                                 let dailyHum = response.list[i].main.humidity;
 
-                                let dailyDetails = document.createElement("div");
+                                
 
-                                dailyDetails.innerHTML = "<p> Date: " + dailyDate + "</p>" +
-                                "<p> Temp: " + dailyTemp + "&#176F</p>" +
-                                "<p> Wind: " + dailyWind + " MPH</p>" +
-                                "<p> Humidity: " + dailyHum + "%</p>"
+                                let dailyContainer = document.createElement("div");
+                                dailyContainer.className = "col-sm card";
 
+                                let dailyContainerCard = document.createElement("div");
+                                dailyContainerCard.className = "card-body";
+
+                                let dailyContainerCardDate = document.createElement("h5");
+                                dailyContainerCardDate.className = "card-title";
+                                dailyContainerCardDate.innerHTML = dailyDate;
+
+                                let dailyContainerCardInfo = document.createElement("p");
+                                dailyContainerCardInfo.className = "card-text";
+                                dailyContainerCardInfo.innerHTML = "<p class='card-text'> Temp: " + dailyTemp + "&#176F" +
+                                "<br />" +
+                                "Wind: " + dailyWind + " MPH" +
+                                "<br />" +
+                                "Humidity: " + dailyHum + "%</p>";
+
+                                dailyContainerCard.appendChild(dailyContainerCardDate);
+                                dailyContainerCard.appendChild(dailyContainerCardInfo);
+                                dailyContainer.appendChild(dailyContainerCard);
+                                dailyDetails.appendChild(dailyContainer);
                                 futureDetails.appendChild(dailyDetails);
                             }
         
