@@ -1,0 +1,12 @@
+header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: blue;
+    color: white;
+    font-size: 36px;
+}
+
+div {
+    border: 1px solid black;
+}
