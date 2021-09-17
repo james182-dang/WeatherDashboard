@@ -7,4 +7,30 @@ header {
     font-size: 36px;
 }
 
+.green {
+    background-color: green;
+    color: white;
+}
 
+.yellow {
+    background-color: yellow;
+    color: white;
+}
+
+.red {
+    background-color: red;
+    color: white;
+}
+
+.historyBtn {
+    margin: 5px 0;
+}
+
+#citySearchBar {
+    width: 80%;
+}
+
+#citySearchBtn {
+    margin: 10px 0;
+    width: 80%;
+}

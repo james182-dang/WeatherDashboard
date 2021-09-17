@@ -1,7 +1,35 @@
 // DOM elements
 let citySearchBtn = $("#citySearchBtn");
+let historyBtn = $(".historyBtn");
 
-// Base functionality
+// Functions
+
+// Function that saves search to local storage
+
+function citySave() {
+    let citySearchValue = $("#citySearchBar").val().trim();
+    localStorage.setItem("savedCity", citySearchValue);
+
+    let citySearchHistory = document.querySelector("#citySearchHistory")
+    let cityHistoryContainer = document.createElement("div");
+    let cityHistory = document.createElement("button");
+    
+    cityHistory.value = localStorage.getItem("savedCity");
+    cityHistory.className = "btn btn-primary historyBtn";
+    cityHistory.textContent = citySearchValue;
+
+    cityHistoryContainer.appendChild(cityHistory);
+    citySearchHistory.appendChild(cityHistoryContainer);
+};
+
+// Function that loads city name from local storage on click
+
+function cityLoad() {
+    
+}
+
+
+// Function that calls APIs and provides weather data
 
 function citySearch() {
 
@@ -43,6 +71,8 @@ function citySearch() {
                     let wind = response.current.wind_speed;
                     let humidity = response.current.humidity;
                     let uvi = response.current.uvi;
+                        
+                    
         
         
         
@@ -53,6 +83,14 @@ function citySearch() {
                     "<p> Humidity: " + humidity + "%</p>" +
                     "<br />" +
                     "<p> UV Index: " + uvi + "</p>";
+
+                    if (uvi >= 2) {
+                        uvi.className = "yellow";
+                    } else if (uvi >= 5) {
+                        uvi.className = "red";
+                    } else {
+                        uvi.className = "green";
+                    };
                     
                     // Append current information to parent div for display
                     weatherDetails.appendChild(detailsDiv);
@@ -130,4 +168,10 @@ function citySearch() {
 
 
 // Event listeners
+historyBtn.on("click", function() {
+    citySearchValue = historyBtn.value;
+
+    citySearch();
+});
+citySearchBtn.on("click", citySave);
 citySearchBtn.on("click", citySearch);
