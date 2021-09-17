@@ -5,27 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/styles.css">
     <title>Weather Dashboard</title>   
 </head>
 <body>
     <header>Weather Dashboard</header>
-    <div id="citySearch">
-        <h2>Search for a City:</h2>
-        <input type="text" id="citySearchBar" value="">
-        <button type="submit" id="citySearchBtn">Search</button>
 
-        <div id="citySearchHistory">
-            Placeholder
+    <div id="weatherHistory" class="container-fluid">
+        <div class="row">
+            <div id="citySearch" class="col-sm">
+                <h2>Search for a City:</h2>
+                <input type="text" id="citySearchBar" value="">
+                <button type="submit" id="citySearchBtn" class="btn btn-primary">Search</button>
+                <div id="citySearchHistory">
+                    Placeholder
+                </div>
+            </div>
+            <div class="container col-9">
+                <div id="response-header" class="row">
+                </div>
+                <div id="fiveDayContainer" class="row">
+                    <h3>5-Day Forecast:</h3>
+                </div>
+            </div>   
         </div>
+        <div class="row">
+            
+        </div>
+        
     </div>
-    <div class="weatherContainer">
-        <div id="response-header">
-        </div>
-        <div id="fiveDayContainer">
-            <h3>5-Day Forecast:</h3>
-        </div>
+    
+
+    <div class="container">
     </div>
+    
     
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

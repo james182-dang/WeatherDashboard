@@ -5,11 +5,15 @@ let citySearchBtn = $("#citySearchBtn");
 
 function citySearch() {
 
+    // Have user input fill in API URL, retrieves lat and lon data to pass in to next API
     let citySearchValue = $("#citySearchBar").val().trim();
     fetch("https://api.openweathermap.org/data/2.5/weather?q=" + citySearchValue + "&units=imperial&appid=2f0eea858680841d20a1b82aaa9fa729")
+        
+        // Parse it!
         .then(function(response) {
             return response.json();
         })
+        // Retrieve lat and lon and pass that into next API to retrieve more specific weather data
         .then(function(response) {
 
             let lon = response.coord.lon;
@@ -21,9 +25,12 @@ function citySearch() {
                 })
                 .then(function(response) {
 
+                    //Dynamically update HTML to display city searched
                     let responseHeader = document.querySelector("#response-header");
-                    responseHeader.innerHTML = "<h2>" + citySearchValue + "</h2>";
+                    let date = new Date();
+                    responseHeader.innerHTML = "<h2>" + citySearchValue + " " + date + "</h2>";
         
+                    // retrieve current days weather information, create containers
                     let weatherDetails = document.createElement("div");
                     weatherDetails.id = 'details';
                     weatherDetails.className = 'details';
@@ -39,16 +46,18 @@ function citySearch() {
         
         
         
-                    detailsDiv.innerHTML = "<h2> Temp: " + temp + "&#176F</h2>" +
+                    detailsDiv.innerHTML = "<p> Temp: " + temp + "&#176F</p>" +
                     "<br />" + 
-                    "<h2> Wind Speed: " + wind + " MPH</h2>" + 
+                    "<p> Wind Speed: " + wind + " MPH</p>" + 
                     "<br />" +
-                    "<h2> Humidity: " + humidity + "%</h2>" +
+                    "<p> Humidity: " + humidity + "%</p>" +
                     "<br />" +
-                    "<h2> UV Index: " + uvi + "</h2>";
+                    "<p> UV Index: " + uvi + "</p>";
                     
+                    // Append current information to parent div for display
                     weatherDetails.appendChild(detailsDiv);
 
+                    // Pass city searched into 5 day weather forecast API
                     fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + citySearchValue + "&units=imperial&appid=2f0eea858680841d20a1b82aaa9fa729")
                         .then(function(response) {
                             return response.json();
@@ -66,11 +75,14 @@ function citySearch() {
                             let dailyDetails = document.createElement("div");
                             dailyDetails.className = "row"
 
-                            for(let i = 0; i <= 4; i++) {
-                                let dailyDate = response.list[i].dt;
+                            //For loop incrementing by 8 to retrieve daily data (API checks every 3 hours), create a card for each
+                            for(let i = 0; i <= 32; i += 8) {
+                                let dailyDateData = response.list[i].dt;
+                                let dailyDate = new Date(dailyDateData * 1000);
                                 let dailyTemp = response.list[i].main.temp;
                                 let dailyWind = response.list[i].wind.speed;
                                 let dailyHum = response.list[i].main.humidity;
+                                let weatherIcon = response.list[i].weather.icon;
 
                                 
 
@@ -87,7 +99,7 @@ function citySearch() {
                                 let dailyContainerCardInfo = document.createElement("p");
                                 dailyContainerCardInfo.className = "card-text";
                                 dailyContainerCardInfo.innerHTML = "<p class='card-text'> Temp: " + dailyTemp + "&#176F" +
-                                "<br />" +
+                                "<br />" + 
                                 "Wind: " + dailyWind + " MPH" +
                                 "<br />" +
                                 "Humidity: " + dailyHum + "%</p>";
@@ -97,7 +109,7 @@ function citySearch() {
                                 dailyContainer.appendChild(dailyContainerCard);
                                 dailyDetails.appendChild(dailyContainer);
                                 futureDetails.appendChild(dailyDetails);
-                            }
+                            };
         
                         })
 
@@ -105,7 +117,7 @@ function citySearch() {
                 })
 
         })
-}
+};
 
 
 
