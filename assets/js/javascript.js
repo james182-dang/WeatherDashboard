@@ -1,6 +1,6 @@
 // DOM elements
 let citySearchBtn = $("#citySearchBtn");
-let historyBtn = $(".historyBtn");
+let historyBtn = $("#historyBtn");
 
 // Functions
 
@@ -15,17 +15,22 @@ function citySave() {
     let cityHistory = document.createElement("button");
     
     cityHistory.value = localStorage.getItem("savedCity");
-    cityHistory.className = "btn btn-primary historyBtn";
+    cityHistory.className = "btn btn-primary";
+    cityHistory.id = "historyBtn";
     cityHistory.textContent = citySearchValue;
 
     cityHistoryContainer.appendChild(cityHistory);
     citySearchHistory.appendChild(cityHistoryContainer);
 };
 
-// Function that loads city name from local storage on click
+// Function that loads city name from local storage on load
 
 function cityLoad() {
-    
+    let cityLoadHistory = localStorage.getItem("savedCity");
+    let cityLoadHistoryContainer = document.createElement("div");
+
+    cityLoadHistoryContainer.innerHTML = "<button class='btn btn-primary' id='historyBtn'>" + cityLoadHistory + "</button>";
+
 }
 
 
@@ -165,13 +170,12 @@ function citySearch() {
 
 
 
-
-
 // Event listeners
 historyBtn.on("click", function() {
+    citySearchValue = "";
     citySearchValue = historyBtn.value;
 
-    citySearch();
+    citySearch(citySearchValue);
 });
 citySearchBtn.on("click", citySave);
 citySearchBtn.on("click", citySearch);
